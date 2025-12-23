@@ -5,8 +5,8 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: https://charts.goauthentik.io
+  sources:
+  - repoURL: https://charts.goauthentik.io
     targetRevision: 2025.10.3
     chart: authentik
     helm:
@@ -37,6 +37,11 @@ spec:
               adminPasswordKey: postgresql_password
         redis:
           enabled: true
+  - repoURL: git@github.com:Chelsea486MHz/gitops.git
+    targetRevision: main
+    path: apps/authentik
+    directory:
+      include: "{ingress.yaml,sealed-secret.yaml}"
   destination:
     server: https://kubernetes.default.svc
     namespace: authentik

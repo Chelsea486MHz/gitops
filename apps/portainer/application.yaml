@@ -5,8 +5,8 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: https://portainer.github.io/k8s
+  sources:
+  - repoURL: https://portainer.github.io/k8s
     targetRevision: 1.0.63
     chart: portainer
     helm:
@@ -17,6 +17,11 @@ spec:
           force: false
         ingress:
           enabled: false
+  - repoURL: git@github.com:Chelsea486MHz/gitops.git
+    targetRevision: main
+    path: apps/portainer
+    directory:
+      include: "ingress.yaml"
   destination:
     server: https://kubernetes.default.svc
     namespace: portainer

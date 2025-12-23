@@ -18,6 +18,11 @@ spec:
               secretKeyRef:
                 name: authentik-secrets
                 key: secret_key
+          - name: AUTHENTIK_POSTGRESQL__PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: authentik-secrets
+                key: postgresql_password
         authentik:
           error_reporting:
             enabled: false
@@ -26,6 +31,10 @@ spec:
             enabled: false
         postgresql:
           enabled: true
+          auth:
+            existingSecret: authentik-secrets
+            secretKeys:
+              adminPasswordKey: postgresql_password
         redis:
           enabled: true
   destination:

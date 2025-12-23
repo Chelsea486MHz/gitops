@@ -1,0 +1,57 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: authentik-tls
+  namespace: authentik
+spec:
+  secretName: authentik-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+  - authentik.chelsea486mhz.fr
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: authentik
+  namespace: authentik
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - match: Host(`authentik.chelsea486mhz.fr`)
+    kind: Rule
+    services:
+    - name: authentik-server
+      port: 80
+  tls:
+    secretName: authentik-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: authentik-http
+  namespace: authentik
+spec:
+  entryPoints:
+  - web
+  routes:
+  - match: Host(`authentik.chelsea486mhz.fr`)
+    kind: Rule
+    middlewares:
+    - name: https-redirect
+      namespace: authentik
+    services:
+    - name: authentik-server
+      port: 80
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: https-redirect
+  namespace: authentik
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true

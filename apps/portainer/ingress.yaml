@@ -1,0 +1,70 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: portainer-tls
+  namespace: portainer
+spec:
+  secretName: portainer-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+  - portainer.chelsea486mhz.fr
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: portainer
+  namespace: portainer
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - match: Host(`portainer.chelsea486mhz.fr`)
+    kind: Rule
+    services:
+    - name: portainer
+      port: 9000
+    middlewares:
+    - name: portainer-headers
+      namespace: portainer
+  tls:
+    secretName: portainer-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: portainer-headers
+  namespace: portainer
+spec:
+  headers:
+    customRequestHeaders:
+      X-Forwarded-Proto: https
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: portainer-http
+  namespace: portainer
+spec:
+  entryPoints:
+  - web
+  routes:
+  - match: Host(`portainer.chelsea486mhz.fr`)
+    kind: Rule
+    middlewares:
+    - name: https-redirect
+      namespace: portainer
+    services:
+    - name: portainer
+      port: 9000
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: https-redirect
+  namespace: portainer
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true

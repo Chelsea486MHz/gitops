@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: portainer-agent
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://portainer.github.io/k8s
+    targetRevision: 1.0.63
+    chart: portainer-agent
+    helm:
+      valuesObject:
+        agent:
+          edgeKeySecret: portainer-edge-key
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: portainer
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

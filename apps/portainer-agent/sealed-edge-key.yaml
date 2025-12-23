@@ -1,0 +1,13 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: portainer-edge-key
+  namespace: portainer
+spec:
+  encryptedData:
+    EDGE_KEY: AgBKguP33qMKm/tVkwX0JdaadGCyZwDFIwFQBSd4f0t2tTIam0JH2ABrH31KnmS/jkO0S1udAWqkrsDi6ray7nNoyC4HgP8v6qI4OVHGuRNWNcquRHKCvADk1IIOhDDpRemN8OD+Mc8mB67PLfG7bWuzgyFYKoD5Slx6FNezUtHcS/vYgH70hSTDkOkp0HlwHRm5TwXOVkkgHWNEz1IHZYZON3SLqEcfy2LIWaGP1dhqs0/0kztGk+BSGy9txkfI/01sFFj9zEka93A4nhESwIHVWpATzm3miJ0fLFrBXEH0G469d0nqZrWNqRIKWGcmoeBxTa4b5PmgUhxandoP9JHbzNEvxaFbrJxsRGdl0Lp3CYkT2WSEEEIXXrONuoXSaAlsfKKkUijiwpS0v5ochIrzun1RmS+6M492sM7Iigknv/U/g58wzGEuZ+xp68FmwNrzLYAU7ewTF/nioOGm1ODqEWbfsmtigOxOhiJYwXyqUpq5rAppgKn/PGgYLZUB5zlq84YsUzJ+NAFzBQus5E+aUDoYl5JbE/azhFI+gYKKTBRL7rUZT7xMDnO9dkrNjuY3EBXdpKRmSG6A6YRF3y3TEMdVPxj+STctSXqOkHbaAzW93sAIH8TaXv6d++CzBX3Kr4/UW16/Xz3+0PxnKUjE8kWVvitfbGTaEzepwA/v2m2xMccvZIJDgias3KKVy9jCmjlLswfgdCfOKsNP6Cj3HeDsvtwx20PyGtkVPYiDTbrqRzQFWcywJg2uEqVZYq/iw4MgXHjXO5c8RSBg+t5ufINwtMz3QUoPIDUeUar7kkXf2M3W5CnvOVFekNTNjUmBgjZSvxIQNlzhNZJK949aYZxCOL0Xln/IYLcT903rGLRVFEFtjaLu2a6b+S4TsIsq+Jw4jNQN
+  template:
+    metadata:
+      name: portainer-edge-key
+      namespace: portainer

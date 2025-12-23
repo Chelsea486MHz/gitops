@@ -1,0 +1,17 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "argocd": {
+    "fileMatch": ["apps/.+\\.yaml$"]
+  },
+  "packageRules": [
+    {
+      "matchManagers": ["argocd"],
+      "matchDatasources": ["helm"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    }
+  ]
+}

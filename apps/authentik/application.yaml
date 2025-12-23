@@ -22,7 +22,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: authentik-secrets
-                key: postgresql_password
+                key: password
         authentik:
           error_reporting:
             enabled: false
@@ -34,7 +34,8 @@ spec:
           auth:
             existingSecret: authentik-secrets
             secretKeys:
-              adminPasswordKey: postgresql_password
+              adminPasswordKey: password
+              userPasswordKey: password
         redis:
           enabled: true
   - repoURL: git@github.com:Chelsea486MHz/gitops.git

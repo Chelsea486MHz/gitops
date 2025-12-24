@@ -29,8 +29,57 @@ spec:
         server:
           ingress:
             enabled: false
+          podSecurityContext:
+            runAsNonRoot: true
+            runAsUser: 910
+            runAsGroup: 910
+            fsGroup: 910
+            seccompProfile:
+              type: RuntimeDefault
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+        worker:
+          podSecurityContext:
+            runAsNonRoot: true
+            runAsUser: 910
+            runAsGroup: 910
+            fsGroup: 910
+            seccompProfile:
+              type: RuntimeDefault
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
         postgresql:
           enabled: true
+          primary:
+            podSecurityContext:
+              enabled: true
+              fsGroup: 911
+            containerSecurityContext:
+              enabled: true
+              runAsUser: 911
+              runAsGroup: 911
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
           auth:
             existingSecret: authentik-secrets
             secretKeys:
@@ -38,11 +87,21 @@ spec:
               userPasswordKey: password
         redis:
           enabled: true
+          master:
+            podSecurityContext:
+              enabled: true
+              fsGroup: 912
+            containerSecurityContext:
+              enabled: true
+              runAsUser: 912
+              runAsGroup: 912
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
   - repoURL: git@github.com:Chelsea486MHz/gitops.git
     targetRevision: main
     path: apps/authentik
     directory:
-      include: "{ingress.yaml,sealed-secret.yaml}"
+      exclude: "application.yaml"
   destination:
     server: https://kubernetes.default.svc
     namespace: authentik

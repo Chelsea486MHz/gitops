@@ -17,11 +17,18 @@ spec:
           force: false
         ingress:
           enabled: false
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
   - repoURL: git@github.com:Chelsea486MHz/gitops.git
     targetRevision: main
     path: apps/portainer
     directory:
-      include: "ingress.yaml"
+      exclude: "application.yaml"
   destination:
     server: https://kubernetes.default.svc
     namespace: portainer

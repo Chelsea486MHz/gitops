@@ -12,3 +12,4 @@ This repository is used for GitOps with ArgoCD on my personal lab.
 | ArgoCD | GitOps framework | https://argocd.chelsea486mhz.fr |
 | Portainer | Kubernetes dashboard | https://portainer.chelsea486mhz.fr |
 | Authentik | SSO and identity provider | https://authentik.chelsea486mhz.fr |
+| Heimdall | Dashboard | https://lab.chelsea486mhz.fr |
